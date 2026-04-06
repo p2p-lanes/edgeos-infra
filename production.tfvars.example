@@ -1,0 +1,62 @@
+# =============================================================================
+# EdgeOS ECS-Only — Example configuration
+# Copy this file and fill in your values:
+#   cp production.tfvars.example production.tfvars
+#   terraform apply -var-file=production.tfvars
+# =============================================================================
+
+# --- General -----------------------------------------------------------------
+aws_region   = "us-east-1"
+project_name = "edgeos"
+environment  = "production"
+
+# --- Existing VPC (required) -------------------------------------------------
+vpc_id             = "vpc-"
+public_subnet_ids  = ["subnet-", "subnet-"]
+private_subnet_ids = ["subnet-", "subnet-"]
+
+# --- Domains -----------------------------------------------------------------
+# Used for ALB host-based routing only. We do NOT create DNS records.
+# After apply, point these domains to the ALB DNS name (shown in outputs)
+# using your own DNS provider (Cloudflare, GoDaddy, Route53, etc.).
+domain        = "app.example.com"
+api_domain    = "api.example.com"
+portal_domain = "portal.example.com"
+
+# --- TLS (optional) ----------------------------------------------------------
+# Provide an ACM certificate ARN to enable HTTPS on the ALB.
+# If you handle TLS elsewhere (e.g. Cloudflare proxy), leave this out —
+# the ALB will serve plain HTTP and your proxy terminates TLS.
+# certificate_arn = "arn:aws:acm:us-east-1"
+
+# --- Database ----------------------------------------------------------------
+postgres_server   = "your-db-host.example.com"
+postgres_port     = "5432"
+postgres_db       = "edgeos"
+postgres_user     = "edgeos"
+postgres_password = "CHANGE_ME"
+
+# --- Application secrets -----------------------------------------------------
+secret_key       = "CHANGE_ME_64_CHAR_RANDOM_STRING"
+superadmin_email = "admin@example.com"
+
+# --- SMTP (leave empty to disable email) -------------------------------------
+# smtp_host     = "smtp.example.com"
+# smtp_port     = "587"
+# smtp_user     = "apikey"
+# smtp_password = "CHANGE_ME"
+# sender_email  = "noreply@example.com"
+
+# --- Storage (S3 or S3-compatible) -------------------------------------------
+# storage_bucket       = "my-bucket"
+# storage_region       = "us-east-1"
+# storage_endpoint_url = ""
+# storage_access_key   = "CHANGE_ME"
+# storage_secret_key   = "CHANGE_ME"
+# storage_public_url   = "https://cdn.example.com"
+
+# --- Redis (leave empty to disable) ------------------------------------------
+# redis_url = "redis://"
+
+# --- Sentry (leave empty to disable) -----------------------------------------
+# sentry_dsn = ""
